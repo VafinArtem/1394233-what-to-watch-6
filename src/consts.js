@@ -9,6 +9,14 @@ export const Url = {
   NOT_FOUND: `/404`
 };
 
+export const Routes = {
+  FILMS: `/films`,
+  LOGIN: `/login`,
+  LOGOUT: `/logout`,
+  FAVORITE: `/favorite`,
+  PROMO: `/films/promo`
+};
+
 export const ALL_GENRES_NAME_TAB = `All genres`;
 
 export const FILMS_AMOUNT_PER_STEP = 8;

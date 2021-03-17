@@ -1,14 +1,6 @@
 import browserHistory from "../browser-history";
-import {AuthorizationStatuses, Url} from "../consts";
+import {AuthorizationStatuses, Url, Routes} from "../consts";
 import {loadFilm, loadFilms, redirectToRoute, postComment, authorization, loadFavoriteFilms, addFavoriteFilmsList, removeFavoriteFilmsList, loadPromoFilm, loadGenres, loadComments} from "./action";
-
-const Routes = {
-  FILMS: `/films`,
-  LOGIN: `/login`,
-  LOGOUT: `/logout`,
-  FAVORITE: `/favorite`,
-  PROMO: `/films/promo`
-};
 
 const adaptToClient = (film) => {
   const adaptedFilm = Object.assign(
