@@ -20,7 +20,6 @@ const MoviesList = ({films}) => {
 
 MoviesList.propTypes = {
   films: PropTypes.arrayOf(PropTypes.shape(MOVIES_PROP).isRequired).isRequired,
-  maxFilms: PropTypes.number,
 };
 
 export default MoviesList;
