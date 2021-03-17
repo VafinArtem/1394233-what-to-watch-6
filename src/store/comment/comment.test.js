@@ -1,5 +1,10 @@
-import {activeForm, loadComments, postComment} from '../action';
+import MockAdapter from 'axios-mock-adapter';
+import {createAPI} from '../../services/api';
+import {activeForm, loadComments, postComment, redirectToRoute} from '../action';
+import {addComment, fetchComments} from '../api-actions';
 import {comment} from './comment';
+
+const api = createAPI(() => {});
 
 describe(`Reducers work correctly`, () => {
   it(`Reducer without additional parameters should return initial state`, () => {
@@ -203,5 +208,46 @@ describe(`Reducers work correctly`, () => {
     };
 
     expect(comment(state, activeForm(false))).toEqual(notActiveFormState);
+  });
+});
+
+describe(`Async operation work correctly`, () => {
+  it(`Should make a correct API call to GET /comments`, () => {
+    const apiMock = new MockAdapter(api);
+    const dispatch = jest.fn();
+    const filmID = 1;
+    const loadCommentsFromServer = fetchComments(filmID);
+
+    apiMock
+      .onGet(`/comments/${filmID}`)
+      .reply(200, [{fake: true}]);
+
+    return loadCommentsFromServer(dispatch, () => {}, api)
+      .then(() => {
+        expect(dispatch).toHaveBeenCalledTimes(1);
+        expect(dispatch).toHaveBeenNthCalledWith(1, loadComments([{fake: true}], filmID));
+      });
+  });
+
+  it(`Should make a correct API call to POST /comments`, () => {
+    const apiMock = new MockAdapter(api);
+    const dispatch = jest.fn();
+    const filmID = 1;
+    const fakeComment = {
+      rating: 8,
+      text: `Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director's funniest and most exquisitely designed movies in years.`
+    };
+    const postCommentToServer = addComment(filmID, fakeComment);
+
+    apiMock
+      .onPost(`/comments/${filmID}`)
+      .reply(200, [{fake: true}]);
+
+    return postCommentToServer(dispatch, () => {}, api)
+      .then(() => {
+        expect(dispatch).toHaveBeenCalledTimes(2);
+        expect(dispatch).toHaveBeenNthCalledWith(1, postComment([{fake: true}], filmID));
+        expect(dispatch).toHaveBeenNthCalledWith(2, redirectToRoute(`/films/${filmID}`));
+      });
   });
 });
