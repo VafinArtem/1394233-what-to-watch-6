@@ -14,7 +14,7 @@ const MyList = ({favoriteFilms, loadFavoriteFilms}) => {
     if (favoriteFilms.length === 0) {
       loadFavoriteFilms();
     }
-  }, [favoriteFilms]);
+  }, [favoriteFilms.length]);
 
   return (
     <div className="user-page">
