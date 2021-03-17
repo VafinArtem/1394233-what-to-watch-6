@@ -23,6 +23,7 @@ const films = createReducer(initialState, (builder) => {
   });
   builder.addCase(ActionType.LOAD_FILMS, (state, action) => {
     state.films = action.payload;
+    state.loadedFilm = null;
   });
   builder.addCase(ActionType.LOAD_FAVORITE_FILMS, (state, action) => {
     state.favoriteFilms = action.payload;
@@ -55,7 +56,7 @@ const films = createReducer(initialState, (builder) => {
     }
   });
   builder.addCase(ActionType.REMOVE_FAVORITE_FILM, (state, action) => {
-    if (state.loadedFilm !== null && state.loadedFilm.id === action.payload.id) {
+    if (state.loadedFilm !== null && state.loadedFilm.id === action.payload) {
       state.loadedFilm = Object.assign(
           {},
           state.loadedFilm,
