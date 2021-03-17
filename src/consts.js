@@ -14,7 +14,8 @@ export const Routes = {
   LOGIN: `/login`,
   LOGOUT: `/logout`,
   FAVORITE: `/favorite`,
-  PROMO: `/films/promo`
+  PROMO: `/films/promo`,
+  COMMENTS: `/comments`
 };
 
 export const ALL_GENRES_NAME_TAB = `All genres`;
