@@ -1,7 +1,52 @@
-import {FILMS_AMOUNT_PER_STEP} from "../../consts";
-import {addFavoriteFilmsList, getFilmGenre, getFilmName, loadFavoriteFilms, loadFilm, loadFilms, loadPromoFilm, removeFavoriteFilmsList, resetAmountShowFilms, showMoreFilms} from "../action";
-import {films} from "./films";
+import MockAdapter from 'axios-mock-adapter';
+import {createAPI} from '../../services/api';
+import {FILMS_AMOUNT_PER_STEP, Routes} from '../../consts';
+import {addFavoriteFilmsList, getFilmGenre, getFilmName, loadFavoriteFilms, loadFilm, loadFilms, loadPromoFilm, removeFavoriteFilmsList, resetAmountShowFilms, showMoreFilms} from '../action';
+import {films} from './films';
+import {addFavorite, fetchFavoriteFilmsList, fetchFilm, fetchFilmsList, fetchPromoFilm} from '../api-actions';
 
+const api = createAPI(() => {});
+
+const fakeFilm = {
+  /* eslint-disable */
+  id: 1,
+  name: `The Grand Budapest Hotel`,
+  poster_image: `img/the-grand-budapest-hotel-poster.jpg`,
+  preview_image: `img/the-grand-budapest-hotel.jpg`,
+  background_image: `img/the-grand-budapest-hotel-bg.jpg`,
+  background_color: `#ffffff`,
+  video_link: `https://some-link`,
+  preview_video_link: `https://some-link`,
+  description: `In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave's friend and protege.`,
+  rating: 8.9,
+  scores_count: 240,
+  director: `Wes Andreson`,
+  starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`, `Saoirse Ronan`],
+  run_time: 99,
+  genre: `Comedy`,
+  released: 2014,
+  is_favorite: false
+  /* eslint-enable */
+};
+const expectedFakeFilm = {
+  id: 1,
+  name: `The Grand Budapest Hotel`,
+  posterImage: `img/the-grand-budapest-hotel-poster.jpg`,
+  previeImage: `img/the-grand-budapest-hotel.jpg`,
+  backgroundImage: `img/the-grand-budapest-hotel-bg.jpg`,
+  backgroundColor: `#ffffff`,
+  videoLink: `https://some-link`,
+  previewVideoLink: `https://some-link`,
+  description: `In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave's friend and protege.`,
+  rating: 8.9,
+  scoresCount: 240,
+  director: `Wes Andreson`,
+  starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`, `Saoirse Ronan`],
+  runTime: 99,
+  genre: `Comedy`,
+  released: 2014,
+  isFavorite: false
+};
 describe(`Reducers work correctly`, () => {
   it(`Reducer without additional parameters should return initial state`, () => {
     const initialState = {
@@ -588,5 +633,176 @@ describe(`Reducers work correctly`, () => {
     };
 
     expect(films(state, getFilmName(activeFilm.name))).toEqual(validState);
+  });
+});
+
+describe(`Async operation work correctly`, () => {
+  it(`Should make a correct API call to GET /films`, () => {
+    const apiMock = new MockAdapter(api);
+    const dispatch = jest.fn();
+    const fakeFilms = [fakeFilm];
+    const expectedFakeFilms = [expectedFakeFilm];
+    const loadFilmsFromServer = fetchFilmsList();
+
+    apiMock
+      .onGet(Routes.FILMS)
+      .reply(200, fakeFilms);
+
+    return loadFilmsFromServer(dispatch, () => {}, api)
+      .then(() => {
+        expect(dispatch).toHaveBeenCalledTimes(2);
+        expect(dispatch).toHaveBeenNthCalledWith(2, loadFilms(expectedFakeFilms));
+      });
+  });
+
+  it(`Should make a correct API call to GET /favorite`, () => {
+    const apiMock = new MockAdapter(api);
+    const dispatch = jest.fn();
+    const fakeFilms = [fakeFilm];
+    const expectedFakeFilms = [expectedFakeFilm];
+    const loadFavoriteFilmsFromServer = fetchFavoriteFilmsList();
+
+    apiMock
+      .onGet(Routes.FAVORITE)
+      .reply(200, fakeFilms);
+
+    return loadFavoriteFilmsFromServer(dispatch, () => {}, api)
+      .then(() => {
+        expect(dispatch).toHaveBeenCalledTimes(1);
+        expect(dispatch).toHaveBeenNthCalledWith(1, loadFavoriteFilms(expectedFakeFilms));
+      });
+  });
+
+  it(`Should make a correct API call to GET /film`, () => {
+    const apiMock = new MockAdapter(api);
+    const dispatch = jest.fn();
+    const filmID = 1;
+    const loadFilmFromServer = fetchFilm(filmID);
+
+    apiMock
+      .onGet(`${Routes.FILMS}/${filmID}`)
+      .reply(200, fakeFilm);
+
+    return loadFilmFromServer(dispatch, () => {}, api)
+      .then(() => {
+        expect(dispatch).toHaveBeenCalledTimes(1);
+        expect(dispatch).toHaveBeenNthCalledWith(1, loadFilm(expectedFakeFilm));
+      });
+  });
+
+  it(`Should make a correct API call to GET /films/promo`, () => {
+    const apiMock = new MockAdapter(api);
+    const dispatch = jest.fn();
+    const loadPromoFilmFromServer = fetchPromoFilm();
+
+    apiMock
+      .onGet(Routes.PROMO)
+      .reply(200, fakeFilm);
+
+    return loadPromoFilmFromServer(dispatch, () => {}, api)
+      .then(() => {
+        expect(dispatch).toHaveBeenCalledTimes(1);
+        expect(dispatch).toHaveBeenNthCalledWith(1, loadPromoFilm(expectedFakeFilm));
+      });
+  });
+
+  it(`Should make a correct API call to GET /favorite/id/1`, () => {
+    const apiMock = new MockAdapter(api);
+    const dispatch = jest.fn();
+    const filmID = 1;
+    const status = 1;
+    const addFavoriteFilm = addFavorite(filmID, status);
+
+    const fakeFavoriteFilm = {
+      /* eslint-disable */
+      id: 1,
+      name: `The Grand Budapest Hotel`,
+      poster_image: `img/the-grand-budapest-hotel-poster.jpg`,
+      preview_image: `img/the-grand-budapest-hotel.jpg`,
+      background_image: `img/the-grand-budapest-hotel-bg.jpg`,
+      background_color: `#ffffff`,
+      video_link: `https://some-link`,
+      preview_video_link: `https://some-link`,
+      description: `In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave's friend and protege.`,
+      rating: 8.9,
+      scores_count: 240,
+      director: `Wes Andreson`,
+      starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`, `Saoirse Ronan`],
+      run_time: 99,
+      genre: `Comedy`,
+      released: 2014,
+      is_favorite: true
+      /* eslint-enable */
+    };
+
+    const expectedFakeFavoriteFilm = {
+      id: 1,
+      name: `The Grand Budapest Hotel`,
+      posterImage: `img/the-grand-budapest-hotel-poster.jpg`,
+      previeImage: `img/the-grand-budapest-hotel.jpg`,
+      backgroundImage: `img/the-grand-budapest-hotel-bg.jpg`,
+      backgroundColor: `#ffffff`,
+      videoLink: `https://some-link`,
+      previewVideoLink: `https://some-link`,
+      description: `In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave's friend and protege.`,
+      rating: 8.9,
+      scoresCount: 240,
+      director: `Wes Andreson`,
+      starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`, `Saoirse Ronan`],
+      runTime: 99,
+      genre: `Comedy`,
+      released: 2014,
+      isFavorite: true
+    };
+
+    apiMock
+      .onPost(`${Routes.FAVORITE}/${filmID}/${status}`)
+      .reply(200, fakeFavoriteFilm);
+
+    return addFavoriteFilm(dispatch, () => {}, api)
+      .then(() => {
+        expect(dispatch).toHaveBeenCalledTimes(1);
+        expect(dispatch).toHaveBeenNthCalledWith(1, addFavoriteFilmsList(expectedFakeFavoriteFilm));
+      });
+  });
+
+  it(`Should make a correct API call to GET /favorite/id/0`, () => {
+    const apiMock = new MockAdapter(api);
+    const dispatch = jest.fn();
+    const filmID = 1;
+    const status = 0;
+    const addFavoriteFilm = addFavorite(filmID, status);
+
+    const fakeFavoriteFilm = {
+      /* eslint-disable */
+      id: 1,
+      name: `The Grand Budapest Hotel`,
+      poster_image: `img/the-grand-budapest-hotel-poster.jpg`,
+      preview_image: `img/the-grand-budapest-hotel.jpg`,
+      background_image: `img/the-grand-budapest-hotel-bg.jpg`,
+      background_color: `#ffffff`,
+      video_link: `https://some-link`,
+      preview_video_link: `https://some-link`,
+      description: `In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave's friend and protege.`,
+      rating: 8.9,
+      scores_count: 240,
+      director: `Wes Andreson`,
+      starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`, `Saoirse Ronan`],
+      run_time: 99,
+      genre: `Comedy`,
+      released: 2014,
+      is_favorite: false
+      /* eslint-enable */
+    };
+
+    apiMock
+      .onPost(`${Routes.FAVORITE}/${filmID}/${status}`)
+      .reply(200, fakeFavoriteFilm);
+
+    return addFavoriteFilm(dispatch, () => {}, api)
+      .then(() => {
+        expect(dispatch).toHaveBeenCalledTimes(1);
+        expect(dispatch).toHaveBeenNthCalledWith(1, removeFavoriteFilmsList(fakeFavoriteFilm.id));
+      });
   });
 });
