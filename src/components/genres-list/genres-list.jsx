@@ -8,7 +8,9 @@ import {changeGenres} from '../../store/action';
 const GenresList = ({onChangeGenres, genres}) => {
   return (
     <React.Fragment>
-      {genres.length !== null ? <ul className="catalog__genres-list">
+      {genres.length !== null ? <ul
+        className="catalog__genres-list"
+        data-testid="genreList">
         {genres.map((tab) => <GenreTab
           tab={tab}
           key={tab}
