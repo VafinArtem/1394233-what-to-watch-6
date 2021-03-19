@@ -1,14 +1,6 @@
 import browserHistory from "../browser-history";
-import {AuthorizationStatuses, Url} from "../consts";
+import {AuthorizationStatuses, Url, Routes} from "../consts";
 import {loadFilm, loadFilms, redirectToRoute, postComment, authorization, loadFavoriteFilms, addFavoriteFilmsList, removeFavoriteFilmsList, loadPromoFilm, loadGenres, loadComments} from "./action";
-
-const Routes = {
-  FILMS: `/films`,
-  LOGIN: `/login`,
-  LOGOUT: `/logout`,
-  FAVORITE: `/favorite`,
-  PROMO: `/films/promo`
-};
 
 const adaptToClient = (film) => {
   const adaptedFilm = Object.assign(
@@ -67,13 +59,13 @@ export const fetchFavoriteFilmsList = () => (dispatch, _getState, api) => (
   api.get(Routes.FAVORITE)
     .then(({data}) => data.map(adaptToClient))
     .then((data) => dispatch(loadFavoriteFilms(data)))
+    .catch(() => {})
 );
 
 export const fetchFilm = (id) => (dispatch, _getState, api) => (
-  api.get(`/films/${id}`)
+  api.get(`${Routes.FILMS}/${id}`)
     .then(({data}) => adaptToClient(data))
     .then((data) => dispatch(loadFilm(data)))
-    .catch(() => dispatch(redirectToRoute(Url.NOT_FOUND)))
 );
 
 export const fetchPromoFilm = () => (dispatch, _getState, api) => (
@@ -84,20 +76,20 @@ export const fetchPromoFilm = () => (dispatch, _getState, api) => (
 );
 
 export const fetchComments = (filmID) => (dispatch, _getState, api) => (
-  api.get(`/comments/${filmID}`)
+  api.get(`${Routes.COMMENTS}/${filmID}`)
     .then(({data}) => dispatch(loadComments(data, filmID)))
     .catch(() => {})
 );
 
 export const addComment = (id, comment) => (dispatch, _getState, api) => (
-  api.post(`/comments/${id}`, adaptToServer(comment))
+  api.post(`${Routes.COMMENTS}/${id}`, adaptToServer(comment))
     .then(({data}) => dispatch(postComment(data, id)))
     .then(() => dispatch(redirectToRoute(`/films/${id}`)))
     .catch(() => {})
 );
 
 export const addFavorite = (id, status) => (dispatch, _getState, api) => (
-  api.post(`/favorite/${id}/${status}`)
+  api.post(`${Routes.FAVORITE}/${id}/${status}`)
     .then(({data}) => adaptToClient(data))
     .then((data) => {
       return status === 1 ? dispatch(addFavoriteFilmsList(data)) : dispatch(removeFavoriteFilmsList(data.id));

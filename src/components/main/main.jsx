@@ -6,7 +6,9 @@ const Main = () => {
   return (
     <React.Fragment>
       <Header />
-      <div className="page-content">
+      <div
+        className="page-content"
+        data-testid="mainContent">
         <Catalog />
         <footer className="page-footer">
           <div className="logo">
