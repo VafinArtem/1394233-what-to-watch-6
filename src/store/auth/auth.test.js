@@ -1,7 +1,7 @@
 import MockAdapter from 'axios-mock-adapter';
 import {createAPI} from '../../services/api';
 import {auth} from './auth';
-import {authorization, redirectToRoute} from '../action';
+import {authorization, authorizationFailed, redirectToRoute} from '../action';
 import {AuthorizationErrorMessage, AuthorizationStatuses, Routes, Url} from '../../consts';
 import {checkLogin, login, logout} from '../api-actions';
 
@@ -46,7 +46,7 @@ describe(`Reducers work correctly`, () => {
       errorMessage: AuthorizationErrorMessage.EMAIL,
     };
 
-    expect(auth(state, authorization(AuthorizationStatuses.NO_AUTH))).toEqual(validState);
+    expect(auth(state, authorizationFailed())).toEqual(validState);
   });
 });
 
