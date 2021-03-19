@@ -1,3 +1,6 @@
+import {AuthorizationStatuses} from "./consts";
+import {NameSpace} from "./store/main-reducer";
+
 export const testFilm = {
   id: 1,
   name: `The Grand Budapest Hotel`,
@@ -27,4 +30,38 @@ export const testComment = {
   rating: 8.9,
   comment: `Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director's funniest and most exquisitely designed movies in years.`,
   date: `2019-05-08T14:13:56.569Z`
+};
+
+export const testStoreWithAuth = {
+  [NameSpace.FILMS]: {
+    films: [testFilm],
+    promoMovie: testFilm,
+    favoriteFilms: [testFilm]
+  },
+  [NameSpace.AUTH]: {
+    authorizationStatus: AuthorizationStatuses.AUTH,
+    isAuthorisationFailed: false
+  },
+  [NameSpace.GENRE]: {
+    genre: testFilm.genre,
+    genres: []
+  },
+  [NameSpace.COMMENT]: {
+    isActiveAddCommentForm: true
+  }
+};
+
+export const testStoreWithoutAuth = {
+  [NameSpace.FILMS]: {
+    films: [testFilm],
+    promoMovie: testFilm
+  },
+  [NameSpace.AUTH]: {
+    authorizationStatus: AuthorizationStatuses.NO_AUTH,
+    isAuthorisationFailed: false
+  },
+  [NameSpace.GENRE]: {
+    genre: testFilm.genre,
+    genres: []
+  }
 };
