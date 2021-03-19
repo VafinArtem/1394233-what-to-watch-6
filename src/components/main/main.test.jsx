@@ -4,10 +4,9 @@ import {Router} from 'react-router-dom';
 import configureStore from 'redux-mock-store';
 import {createMemoryHistory} from 'history';
 import {Provider} from 'react-redux';
-import {AuthorizationStatuses, Url} from '../../consts';
+import {Url} from '../../consts';
 import Main from './main';
-import {NameSpace} from '../../store/main-reducer';
-import {testFilm} from '../../test-mock';
+import {testStoreWithAuth} from '../../test-mock';
 
 const mockStore = configureStore({});
 
@@ -16,19 +15,7 @@ it(`Main should render correctly`, () => {
   history.push(Url.MAIN);
 
   render(
-      <Provider store={mockStore({
-        [NameSpace.GENRE]: {
-          genre: `Comedy`,
-          genres: []
-        },
-        [NameSpace.FILMS]: {
-          films: [testFilm],
-          promoMovie: testFilm
-        },
-        [NameSpace.AUTH]: {
-          authorizationStatus: AuthorizationStatuses.AUTH
-        }
-      })}>
+      <Provider store={mockStore(testStoreWithAuth)}>
         <Router history={history}>
           <Main />
         </Router>

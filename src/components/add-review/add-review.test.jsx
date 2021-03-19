@@ -4,10 +4,9 @@ import {Router} from 'react-router-dom';
 import configureStore from 'redux-mock-store';
 import {Provider} from 'react-redux';
 import {createMemoryHistory} from 'history';
-import {AuthorizationStatuses, Url} from '../../consts';
+import {Url} from '../../consts';
 import AddReview from './add-review';
-import {testFilm} from '../../test-mock';
-import {NameSpace} from '../../store/main-reducer';
+import {testFilm, testStoreWithAuth} from '../../test-mock';
 
 const mockStore = configureStore({});
 
@@ -18,13 +17,7 @@ it(`AddReview should render correctly`, () => {
   history.push(Url.ADD_REVIEW);
 
   render(
-      <Provider store={mockStore({[NameSpace.COMMENT]: {
-        isActiveAddCommentForm: true
-      },
-      [NameSpace.AUTH]: {
-        authorizationStatus: AuthorizationStatuses.AUTH,
-        errorMessage: ``
-      }})}>
+      <Provider store={mockStore(testStoreWithAuth)}>
         <Router history={history}>
           <AddReview
             title={name}

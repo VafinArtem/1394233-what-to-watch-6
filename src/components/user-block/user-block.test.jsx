@@ -5,19 +5,14 @@ import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
 import {Provider} from 'react-redux';
 import UserBlock from './user-block';
-import {NameSpace} from '../../store/main-reducer';
-import {AuthorizationStatuses} from '../../consts';
+import {testStoreWithAuth} from '../../test-mock';
 
 const mockStore = configureStore({});
 
 it(`UserBlock should render correctly`, () => {
   const history = createMemoryHistory();
   render(
-      <Provider store={mockStore({
-        [NameSpace.AUTH]: {
-          authorizationStatus: AuthorizationStatuses.AUTH
-        }
-      })}>
+      <Provider store={mockStore(testStoreWithAuth)}>
         <Router history={history}>
           <UserBlock />
         </Router>

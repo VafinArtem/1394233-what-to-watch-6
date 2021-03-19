@@ -4,10 +4,9 @@ import {Router} from 'react-router-dom';
 import configureStore from 'redux-mock-store';
 import {createMemoryHistory} from 'history';
 import {Provider} from 'react-redux';
-import {Routes, AuthorizationStatuses} from '../../consts';
-import {testFilm} from '../../test-mock';
+import {Routes} from '../../consts';
+import {testFilm, testStoreWithAuth} from '../../test-mock';
 import Movie from './movie';
-import {NameSpace} from '../../store/main-reducer';
 
 const mockStore = configureStore({});
 const {id, name, genre, released} = testFilm;
@@ -18,14 +17,7 @@ it(`Movie should render correctly`, () => {
   history.push(`${Routes.FILMS}/${id}`);
 
   render(
-      <Provider store={mockStore({
-        [NameSpace.FILMS]: {
-          films: [testFilm],
-        },
-        [NameSpace.AUTH]: {
-          authorizationStatus: AuthorizationStatuses.AUTH,
-        }
-      })}>
+      <Provider store={mockStore(testStoreWithAuth)}>
         <Router history={history}>
           <Movie
             film={testFilm}

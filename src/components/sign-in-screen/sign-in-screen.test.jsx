@@ -7,6 +7,7 @@ import {Provider} from 'react-redux';
 import userEvent from '@testing-library/user-event';
 import SignInScreen from './sign-in-screen';
 import {Url} from '../../consts';
+import {testStoreWithoutAuth} from '../../test-mock';
 
 const mockStore = configureStore({});
 
@@ -15,9 +16,7 @@ it(`SignInScreen should render correctly`, () => {
   history.push(Url.SIGN_IN);
 
   render(
-      <Provider store={mockStore({AUTH: {
-        isAuthorisationFailed: false
-      }})}>
+      <Provider store={mockStore(testStoreWithoutAuth)}>
         <Router history={history}>
           <SignInScreen />
         </Router>
