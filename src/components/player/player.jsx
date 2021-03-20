@@ -43,7 +43,7 @@ const Player = ({title, video, poster}) => {
           <div className="player__time-value">{onPlaying ? `${getRemainedDuration(duration).hour}:${getRemainedDuration(duration).minutes}:${getRemainedDuration(duration).seconds}` : `00:00:00`}</div>
         </div>
         <div className="player__controls-row">
-          <button type="button" className="player__play" onClick={() => isPlaying ? videoRef.current.pause() : videoRef.current.play()}>
+          <button type="button" className="player__play" onClick={() => isPlaying ? videoRef.current.pause() : videoRef.current.play()} data-testid="play">
             <svg viewBox="0 0 19 19" width={19} height={19}>
               <use xlinkHref={isPlaying ? `#pause` : `#play-s`} />
             </svg>
