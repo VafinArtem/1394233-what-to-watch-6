@@ -43,7 +43,7 @@ const AddReviewForm = ({filmID, submit, activateForm, isActiveForm}) => {
       <div className="add-review__text">
         <textarea className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text" defaultValue={``} onInput={(evt) => {
           setUserReviewText(evt.target.value);
-        }} />
+        }} data-testid="reviewText" />
         <div className="add-review__submit">
           <button className="add-review__btn" type="submit" disabled={isActiveForm ? `` : `disabled`}>Post</button>
         </div>
