@@ -4,23 +4,29 @@ import configureStore from 'redux-mock-store';
 import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
 import {Provider} from 'react-redux';
-import {UserBlock} from './user-block';
+import {Catalog} from './catalog';
 import {testStoreWithAuth} from '../../test-mock';
 import {NameSpace} from '../../store/main-reducer';
 
 const mockStore = configureStore({});
-
-it(`UserBlock should render correctly`, () => {
+const {[NameSpace.GENRE]: {genre}, [NameSpace.FILMS]: {films}} = testStoreWithAuth;
+it(`Catalog should render correctly`, () => {
   const history = createMemoryHistory();
+  const renderButton = true;
+  const loadFilms = jest.fn();
+
   render(
       <Provider store={mockStore(testStoreWithAuth)}>
         <Router history={history}>
-          <UserBlock
-            authorizationStatus={testStoreWithAuth[NameSpace.AUTH].authorizationStatus}
+          <Catalog
+            genre={genre}
+            films={films}
+            renderButton={renderButton}
+            loadFilms={loadFilms}
           />
         </Router>
       </Provider>
   );
 
-  expect(screen.getByText(/Log Out/i)).toBeInTheDocument();
+  expect(screen.getByText(/Catalog/i)).toBeInTheDocument();
 });

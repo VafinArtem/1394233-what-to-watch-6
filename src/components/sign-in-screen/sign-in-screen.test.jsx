@@ -5,20 +5,25 @@ import configureStore from 'redux-mock-store';
 import {createMemoryHistory} from 'history';
 import {Provider} from 'react-redux';
 import userEvent from '@testing-library/user-event';
-import SignInScreen from './sign-in-screen';
+import {SignInScreen} from './sign-in-screen';
 import {Url} from '../../consts';
 import {testStoreWithoutAuth} from '../../test-mock';
 
 const mockStore = configureStore({});
 
 it(`SignInScreen should render correctly`, () => {
+  const onSubmit = jest.fn();
+  const isAuthorisationFailed = false;
   const history = createMemoryHistory();
   history.push(Url.SIGN_IN);
 
   render(
       <Provider store={mockStore(testStoreWithoutAuth)}>
         <Router history={history}>
-          <SignInScreen />
+          <SignInScreen
+            onSubmit={onSubmit}
+            isAuthorisationFailed={isAuthorisationFailed}
+          />
         </Router>
       </Provider>
   );

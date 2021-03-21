@@ -3,16 +3,21 @@ import {render, screen} from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 import {Provider} from 'react-redux';
 import {testFilm, testStoreWithAuth} from '../../test-mock';
-import PromoMovie from './promo-movie';
+import {PromoMovie} from './promo-movie';
 
 const mockStore = configureStore({});
 
 const {name, genre, released} = testFilm;
 
 it(`PromoMovie should render correctly`, () => {
+  const resetShowFilmsAmount = jest.fn();
+
   render(
       <Provider store={mockStore(testStoreWithAuth)}>
-        <PromoMovie />
+        <PromoMovie
+          promoMovie={testFilm}
+          resetShowFilmsAmount={resetShowFilmsAmount}
+        />
       </Provider>
   );
 
