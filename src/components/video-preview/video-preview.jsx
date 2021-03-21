@@ -22,7 +22,7 @@ const VideoPreview = ({poster, url, isPlaying, setIsPlaying}) => {
   }, [isPlaying]);
 
   return (
-    <video src={url} ref={videoRef} width={280} height={175} poster={poster} muted></video>
+    <video src={url} ref={videoRef} width={280} height={175} poster={poster} data-testid="videoPreview" muted></video>
   );
 };
 

@@ -47,7 +47,8 @@ export const testStoreWithAuth = {
     genres: []
   },
   [NameSpace.COMMENT]: {
-    isActiveAddCommentForm: true
+    isActiveAddCommentForm: true,
+    reviews: {1: [testComment]}
   }
 };
 
@@ -63,5 +64,9 @@ export const testStoreWithoutAuth = {
   [NameSpace.GENRE]: {
     genre: testFilm.genre,
     genres: []
+  },
+  [NameSpace.COMMENT]: {
+    isActiveAddCommentForm: true,
+    reviews: {1: [testComment]}
   }
 };
