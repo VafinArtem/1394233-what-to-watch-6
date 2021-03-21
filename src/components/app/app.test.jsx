@@ -4,19 +4,29 @@ import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
 import {Provider} from 'react-redux';
 import configureStore from 'redux-mock-store';
-import App from './app';
+import {App} from './app';
 import {testFilm, testStoreWithAuth, testStoreWithoutAuth} from '../../test-mock';
-import {Routes, Url} from '../../consts';
+import {AuthorizationStatuses, Routes, Url} from '../../consts';
+import {NameSpace} from '../../store/main-reducer';
 
 const mockStore = configureStore({});
+const {[NameSpace.FILMS]: {films, loadedFilm}} = testStoreWithAuth;
+const loadFilm = jest.fn();
+
 
 describe(`Test routing`, () => {
   it(`Render 'Main' when user navigate to '/' url`, () => {
     const history = createMemoryHistory();
+    const authorizationStatus = AuthorizationStatuses.AUTH;
     render(
         <Provider store={mockStore(testStoreWithAuth)}>
           <Router history={history}>
-            <App />
+            <App
+              films={films}
+              loadedFilm={loadedFilm}
+              loadFilm={loadFilm}
+              authorizationStatus={authorizationStatus}
+            />
           </Router>
         </Provider>
     );
@@ -27,10 +37,16 @@ describe(`Test routing`, () => {
   it(`Render 'SignInScreen' when user navigate to '/login' url`, () => {
     const history = createMemoryHistory();
     history.push(Url.SIGN_IN);
+    const authorizationStatus = AuthorizationStatuses.NO_AUTH;
     render(
         <Provider store={mockStore(testStoreWithoutAuth)}>
           <Router history={history}>
-            <App />
+            <App
+              films={films}
+              loadedFilm={loadedFilm}
+              loadFilm={loadFilm}
+              authorizationStatus={authorizationStatus}
+            />
           </Router>
         </Provider>
     );
@@ -43,10 +59,16 @@ describe(`Test routing`, () => {
   it(`Render 'MyList' when user navigate to '/mylist' url`, () => {
     const history = createMemoryHistory();
     history.push(Url.MY_LIST);
+    const authorizationStatus = AuthorizationStatuses.AUTH;
     render(
         <Provider store={mockStore(testStoreWithAuth)}>
           <Router history={history}>
-            <App />
+            <App
+              films={films}
+              loadedFilm={loadedFilm}
+              loadFilm={loadFilm}
+              authorizationStatus={authorizationStatus}
+            />
           </Router>
         </Provider>
     );
@@ -59,10 +81,16 @@ describe(`Test routing`, () => {
   it(`Render 'Movie' when user navigate to '/films/:id' url`, () => {
     const history = createMemoryHistory();
     history.push(`${Routes.FILMS}/${testFilm.id}`);
+    const authorizationStatus = AuthorizationStatuses.AUTH;
     render(
         <Provider store={mockStore(testStoreWithAuth)}>
           <Router history={history}>
-            <App />
+            <App
+              films={films}
+              loadedFilm={loadedFilm}
+              loadFilm={loadFilm}
+              authorizationStatus={authorizationStatus}
+            />
           </Router>
         </Provider>
     );
@@ -80,10 +108,16 @@ describe(`Test routing`, () => {
   it(`Render 'AddReview' when user navigate to '/films/:id/review' url`, () => {
     const history = createMemoryHistory();
     history.push(`${Routes.FILMS}/${testFilm.id}/review`);
+    const authorizationStatus = AuthorizationStatuses.AUTH;
     render(
         <Provider store={mockStore(testStoreWithAuth)}>
           <Router history={history}>
-            <App />
+            <App
+              films={films}
+              loadedFilm={loadedFilm}
+              loadFilm={loadFilm}
+              authorizationStatus={authorizationStatus}
+            />
           </Router>
         </Provider>
     );
@@ -93,12 +127,20 @@ describe(`Test routing`, () => {
   });
 
   it(`Render 'Player' when user navigate to '/player/:id' url`, () => {
+    window.HTMLMediaElement.prototype.play = () => {};
+    window.HTMLMediaElement.prototype.pause = () => {};
     const history = createMemoryHistory();
     history.push(`/player/${testFilm.id}`);
+    const authorizationStatus = AuthorizationStatuses.AUTH;
     render(
         <Provider store={mockStore(testStoreWithAuth)}>
           <Router history={history}>
-            <App />
+            <App
+              films={films}
+              loadedFilm={loadedFilm}
+              loadFilm={loadFilm}
+              authorizationStatus={authorizationStatus}
+            />
           </Router>
         </Provider>
     );
@@ -112,10 +154,16 @@ describe(`Test routing`, () => {
   it(`Render 'NotFoundPage' when user navigate to '/404' url`, () => {
     const history = createMemoryHistory();
     history.push(Url.NOT_FOUND);
+    const authorizationStatus = AuthorizationStatuses.AUTH;
     render(
         <Provider store={mockStore(testStoreWithAuth)}>
           <Router history={history}>
-            <App />
+            <App
+              films={films}
+              loadedFilm={loadedFilm}
+              loadFilm={loadFilm}
+              authorizationStatus={authorizationStatus}
+            />
           </Router>
         </Provider>
     );
@@ -128,10 +176,16 @@ describe(`Test routing`, () => {
   it(`Render 'NotFoundPage' when user navigate to '/unknowLink' url`, () => {
     const history = createMemoryHistory();
     history.push(`/unknowLink`);
+    const authorizationStatus = AuthorizationStatuses.AUTH;
     render(
         <Provider store={mockStore(testStoreWithAuth)}>
           <Router history={history}>
-            <App />
+            <App
+              films={films}
+              loadedFilm={loadedFilm}
+              loadFilm={loadFilm}
+              authorizationStatus={authorizationStatus}
+            />
           </Router>
         </Provider>
     );

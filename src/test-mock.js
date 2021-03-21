@@ -36,7 +36,8 @@ export const testStoreWithAuth = {
   [NameSpace.FILMS]: {
     films: [testFilm],
     promoMovie: testFilm,
-    favoriteFilms: [testFilm]
+    favoriteFilms: [testFilm],
+    loadedFilm: testFilm
   },
   [NameSpace.AUTH]: {
     authorizationStatus: AuthorizationStatuses.AUTH,
@@ -55,7 +56,9 @@ export const testStoreWithAuth = {
 export const testStoreWithoutAuth = {
   [NameSpace.FILMS]: {
     films: [testFilm],
-    promoMovie: testFilm
+    promoMovie: testFilm,
+    favoriteFilms: [testFilm],
+    loadedFilm: testFilm
   },
   [NameSpace.AUTH]: {
     authorizationStatus: AuthorizationStatuses.NO_AUTH,
