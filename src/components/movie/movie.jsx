@@ -59,7 +59,7 @@ const Movie = ({film, films, onPlayMovie, authorizationStatus}) => {
                   isFavorite={isFavorite}
                 />
                 {authorizationStatus === AuthorizationStatuses.AUTH
-                  ? <Link to={`/films/${id}/review`} className="btn movie-card__button">Add review</Link>
+                  ? <Link to={`/films/${id}/review`} className="btn movie-card__button movie-card__add-review">Add review</Link>
                   : ``
                 }
               </div>
