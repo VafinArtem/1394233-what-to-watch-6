@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Switch, Route, Redirect} from 'react-router-dom';
+import {Switch, Route} from 'react-router-dom';
 import {connect} from 'react-redux';
 import PrivateRoute from '../private-route/private-route';
 import Main from '../main/main';
@@ -10,25 +10,19 @@ import AddReview from '../add-review/add-review';
 import SignInScreen from '../sign-in-screen/sign-in-screen';
 import Player from '../player/player';
 import NotFoundPage from '../not-found-page/not-found-page';
-import {AuthorizationStatuses, Url} from '../../consts';
+import {Url} from '../../consts';
 import {MOVIES_PROP, MOVIES_NOT_REQUIRE_PROP} from '../../utils/validate';
 import {fetchFilm} from '../../store/api-actions';
 import LoadingScreen from '../loading-screen/loading-screen';
 import {getFilms, getLoadedFilm} from '../../store/films/selectors';
 
-const App = ({films, authorizationStatus, loadFilm, loadedFilm}) => {
+const App = ({films, loadFilm, loadedFilm}) => {
   return (
     <Switch>
       <Route exact path={Url.MAIN}>
         <Main />
       </Route>
-      <Route exact path={Url.SIGN_IN} render={() => {
-        return (
-          authorizationStatus === AuthorizationStatuses.AUTH
-            ? <Redirect to={Url.MAIN} />
-            : <SignInScreen />
-        );
-      }}>
+      <Route exact path={Url.SIGN_IN} render={() => <SignInScreen />}>
       </Route>
       <PrivateRoute exact
         path={Url.MY_LIST}
@@ -115,7 +109,6 @@ App.propTypes = {
   films: PropTypes.arrayOf(PropTypes.shape(MOVIES_PROP).isRequired),
   loadedFilm: PropTypes.shape(MOVIES_NOT_REQUIRE_PROP),
   loadFilm: PropTypes.func.isRequired,
-  authorizationStatus: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
