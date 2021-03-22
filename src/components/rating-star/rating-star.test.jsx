@@ -1,19 +1,39 @@
 import React from 'react';
-import {render} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import RatingStar from './rating-star';
+import userEvent from '@testing-library/user-event';
 
-const rating = 5;
-const setUserReviewRating = jest.fn();
+describe(`Test RatingStar`, () => {
+  it(`RatingStar should render correctly`, () => {
+    const rating = 5;
+    const setUserReviewRating = jest.fn();
 
-it(`RatingStar should render correctly`, () => {
-  const {getByText} = render(
-      <RatingStar
-        rating={rating}
-        setUserReviewRating={setUserReviewRating}
-      />
-  );
+    render(
+        <RatingStar
+          rating={rating}
+          setUserReviewRating={setUserReviewRating}
+        />
+    );
 
-  const labelRatingElement = getByText(`Rating ${rating}`);
+    expect(screen.getByText(`Rating ${rating}`)).toBeInTheDocument();
+  });
 
-  expect(labelRatingElement).toBeInTheDocument();
+  it(`When a user clicks on a star, the rating changes`, () => {
+    const rating = 5;
+    let ratingStatus;
+    const setUserReviewRating = jest.fn();
+    setUserReviewRating.mockImplementation(
+        () => (ratingStatus = rating)
+    );
+
+    render(
+        <RatingStar
+          rating={rating}
+          setUserReviewRating={setUserReviewRating}
+        />
+    );
+
+    userEvent.click(screen.getByLabelText(`Rating ${rating}`));
+    expect(ratingStatus).toBe(rating);
+  });
 });

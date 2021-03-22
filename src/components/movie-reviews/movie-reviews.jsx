@@ -15,7 +15,7 @@ const MovieReviews = ({reviews, filmID, loadComments}) => {
   }, [reviews[filmID]]);
 
   return (
-    <div className="movie-card__reviews movie-card__row">
+    <div className="movie-card__reviews movie-card__row" data-testid="reviews">
       <div className="movie-card__reviews-col">
         {reviews[filmID] === undefined ? <LoadingScreen /> : reviews[filmID].map((review) => <MovieReview review={review} key={review.id} />)}
       </div>
