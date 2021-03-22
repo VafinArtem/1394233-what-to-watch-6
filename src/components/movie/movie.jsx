@@ -19,12 +19,13 @@ const Movie = ({film, films, onPlayMovie, authorizationStatus}) => {
     released,
     posterImage,
     id,
-    isFavorite
+    isFavorite,
+    backgroundColor
   } = film;
 
   return (
     <React.Fragment>
-      <section className="movie-card movie-card--full">
+      <section className="movie-card movie-card--full" style={{background: backgroundColor}}>
         <div className="movie-card__hero">
           <div className="movie-card__bg">
             <img src={backgroundImage} alt={name} />
