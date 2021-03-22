@@ -41,7 +41,8 @@ export const testStoreWithAuth = {
   },
   [NameSpace.AUTH]: {
     authorizationStatus: AuthorizationStatuses.AUTH,
-    isAuthorisationFailed: false
+    isAuthorisationFailed: false,
+    userAvatar: `fakeAvatar`
   },
   [NameSpace.GENRE]: {
     genre: testFilm.genre,
@@ -61,8 +62,9 @@ export const testStoreWithoutAuth = {
     loadedFilm: testFilm
   },
   [NameSpace.AUTH]: {
-    authorizationStatus: AuthorizationStatuses.NO_AUTH,
-    isAuthorisationFailed: false
+    authorizationStatus: AuthorizationStatuses.AUTH,
+    isAuthorisationFailed: false,
+    userAvatar: `fakeAvatar`
   },
   [NameSpace.GENRE]: {
     genre: testFilm.genre,

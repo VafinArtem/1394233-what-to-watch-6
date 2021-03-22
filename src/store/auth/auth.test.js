@@ -12,6 +12,7 @@ describe(`Reducers work correctly`, () => {
       authorizationStatus: AuthorizationStatuses.NO_AUTH,
       isAuthorisationFailed: false,
       errorMessage: AuthorizationErrorMessage.DEFAULT,
+      userAvatar: ``
     };
 
     expect(auth(undefined, {})).toEqual(initialState);
@@ -22,15 +23,17 @@ describe(`Reducers work correctly`, () => {
       authorizationStatus: AuthorizationStatuses.NO_AUTH,
       isAuthorisationFailed: false,
       errorMessage: AuthorizationErrorMessage.DEFAULT,
+      userAvatar: ``
     };
 
     const validState = {
       authorizationStatus: AuthorizationStatuses.AUTH,
       isAuthorisationFailed: false,
       errorMessage: AuthorizationErrorMessage.DEFAULT,
+      userAvatar: `fakeAvatar`
     };
 
-    expect(auth(state, authorization(AuthorizationStatuses.AUTH))).toEqual(validState);
+    expect(auth(state, authorization(AuthorizationStatuses.AUTH, `fakeAvatar`))).toEqual(validState);
   });
 
   it(`Reducer will return a valid state in case of failed authorization`, () => {
@@ -38,12 +41,14 @@ describe(`Reducers work correctly`, () => {
       authorizationStatus: AuthorizationStatuses.NO_AUTH,
       isAuthorisationFailed: false,
       errorMessage: AuthorizationErrorMessage.DEFAULT,
+      userAvatar: ``
     };
 
     const validState = {
       authorizationStatus: AuthorizationStatuses.NO_AUTH,
       isAuthorisationFailed: true,
       errorMessage: AuthorizationErrorMessage.EMAIL,
+      userAvatar: ``
     };
 
     expect(auth(state, authorizationFailed())).toEqual(validState);
@@ -58,12 +63,12 @@ describe(`Async operation work correctly`, () => {
 
     apiMock
       .onGet(Routes.LOGIN)
-      .reply(200, [{fake: true}]);
+      .reply(200, {"avatar_url": `fakeAvatar`});
 
     return checkLoginStatus(dispatch, () => {}, api)
       .then(() => {
         expect(dispatch).toHaveBeenCalledTimes(1);
-        expect(dispatch).toHaveBeenNthCalledWith(1, authorization(AuthorizationStatuses.AUTH));
+        expect(dispatch).toHaveBeenNthCalledWith(1, authorization(AuthorizationStatuses.AUTH, `fakeAvatar`));
       });
   });
 
@@ -75,12 +80,12 @@ describe(`Async operation work correctly`, () => {
 
     apiMock
       .onPost(Routes.LOGIN)
-      .reply(200, [{fake: true}]);
+      .reply(200, {"avatar_url": `fakeAvatar`});
 
     return loginLoader(dispatch, () => {}, api)
       .then(() => {
         expect(dispatch).toHaveBeenCalledTimes(2);
-        expect(dispatch).toHaveBeenNthCalledWith(1, authorization(AuthorizationStatuses.AUTH));
+        expect(dispatch).toHaveBeenNthCalledWith(1, authorization(AuthorizationStatuses.AUTH, `fakeAvatar`));
         expect(dispatch).toHaveBeenNthCalledWith(2, redirectToRoute(Url.MAIN));
       });
   });

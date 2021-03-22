@@ -99,13 +99,15 @@ export const addFavorite = (id, status) => (dispatch, _getState, api) => (
 
 export const checkLogin = () => (dispatch, _getState, api) => (
   api.get(Routes.LOGIN)
-    .then(() => dispatch(authorization(AuthorizationStatuses.AUTH)))
+    .then(({data}) => dispatch(authorization(AuthorizationStatuses.AUTH, data.avatar_url)))
     .catch(() => {})
 );
 
 export const login = ({login: email, password}) => (dispatch, _getState, api) => (
   api.post(Routes.LOGIN, {email, password})
-    .then(() => dispatch(authorization(AuthorizationStatuses.AUTH)))
+    .then(({data}) => {
+      dispatch(authorization(AuthorizationStatuses.AUTH, data.avatar_url));
+    })
     .then(() => dispatch(redirectToRoute(Url.MAIN)))
     .catch(() => {})
 );

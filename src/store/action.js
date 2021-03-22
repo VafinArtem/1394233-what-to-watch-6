@@ -64,7 +64,7 @@ export const removeFavoriteFilmsList = createAction(ActionType.REMOVE_FAVORITE_F
 
 export const activeForm = createAction(ActionType.ACTIVE_FORM, (boolean) => ({payload: boolean}));
 
-export const authorization = createAction(ActionType.AUTHORIZATION, (action) => ({payload: action}));
+export const authorization = createAction(ActionType.AUTHORIZATION, (action, avatar) => ({payload: {action, avatar}}));
 
 export const authorizationFailed = createAction(ActionType.AUTHORIZATION_FAILED, () => ({payload: AuthorizationErrorMessage.EMAIL}));
 

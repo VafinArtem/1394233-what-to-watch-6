@@ -9,6 +9,7 @@ import {UserAvatar} from './user-avatar';
 import {Url} from '../../consts';
 
 const mockStore = configureStore({});
+const userAvatar = `string`;
 
 describe(`Test UserAvatar`, () => {
   it(`UserAvatar should render correctly`, () => {
@@ -18,6 +19,7 @@ describe(`Test UserAvatar`, () => {
         <Provider store={mockStore({})}>
           <UserAvatar
             userLogout={userLogout}
+            avatar={userAvatar}
           />
         </Provider>
     );
@@ -37,6 +39,7 @@ describe(`Test UserAvatar`, () => {
               <Route exact path={`/avatar`}>
                 <UserAvatar
                   userLogout={userLogout}
+                  avatar={userAvatar}
                 />
               </Route>
               <Route exact path={Url.MY_LIST}>
@@ -68,6 +71,7 @@ describe(`Test UserAvatar`, () => {
               <Route exact path={`/avatar`}>
                 <UserAvatar
                   userLogout={userLogout}
+                  avatar={userAvatar}
                 />
               </Route>
               <Route exact path={Url.MAIN}>

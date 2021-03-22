@@ -6,13 +6,15 @@ const initialState = {
   authorizationStatus: AuthorizationStatuses.NO_AUTH,
   isAuthorisationFailed: false,
   errorMessage: AuthorizationErrorMessage.DEFAULT,
+  userAvatar: ``,
 };
 
 const auth = createReducer(initialState, (builder) => {
-  builder.addCase(ActionType.AUTHORIZATION, (state, action) => {
+  builder.addCase(ActionType.AUTHORIZATION, (state, {payload: {action, avatar}}) => {
     state.isAuthorisationFailed = false;
-    state.authorizationStatus = action.payload;
+    state.authorizationStatus = action;
     state.errorMessage = AuthorizationErrorMessage.DEFAULT;
+    state.userAvatar = avatar;
   });
   builder.addCase(ActionType.AUTHORIZATION_FAILED, (state, action) => {
     state.isAuthorisationFailed = true;
