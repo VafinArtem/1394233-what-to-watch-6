@@ -105,9 +105,7 @@ export const checkLogin = () => (dispatch, _getState, api) => (
 
 export const login = ({login: email, password}) => (dispatch, _getState, api) => (
   api.post(Routes.LOGIN, {email, password})
-    .then(({data}) => {
-      dispatch(authorization(AuthorizationStatuses.AUTH, data.avatar_url));
-    })
+    .then(({data}) => dispatch(authorization(AuthorizationStatuses.AUTH, data.avatar_url)))
     .then(() => dispatch(redirectToRoute(Url.MAIN)))
     .catch(() => {})
 );

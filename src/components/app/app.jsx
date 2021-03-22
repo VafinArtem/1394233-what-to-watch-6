@@ -15,7 +15,6 @@ import {MOVIES_PROP, MOVIES_NOT_REQUIRE_PROP} from '../../utils/validate';
 import {fetchFilm} from '../../store/api-actions';
 import LoadingScreen from '../loading-screen/loading-screen';
 import {getFilms, getLoadedFilm} from '../../store/films/selectors';
-import {getAuthorizationStatus} from '../../store/auth/selectors';
 
 const App = ({films, authorizationStatus, loadFilm, loadedFilm}) => {
   return (
@@ -116,13 +115,12 @@ App.propTypes = {
   films: PropTypes.arrayOf(PropTypes.shape(MOVIES_PROP).isRequired),
   loadedFilm: PropTypes.shape(MOVIES_NOT_REQUIRE_PROP),
   loadFilm: PropTypes.func.isRequired,
-  authorizationStatus: PropTypes.string.isRequired
+  authorizationStatus: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   films: getFilms(state),
   loadedFilm: getLoadedFilm(state),
-  authorizationStatus: getAuthorizationStatus(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
