@@ -6,7 +6,7 @@ import {createMemoryHistory} from 'history';
 import {Provider} from 'react-redux';
 import userEvent from '@testing-library/user-event';
 import {SignInScreen} from './sign-in-screen';
-import {Url} from '../../consts';
+import {AuthorizationStatuses, Url} from '../../consts';
 import {testStoreWithoutAuth} from '../../test-mock';
 
 const mockStore = configureStore({});
@@ -16,6 +16,7 @@ describe(`Test SignInScreen`, () => {
     const onSubmit = jest.fn();
     const isAuthorisationFailed = false;
     const history = createMemoryHistory();
+    const authorizationStatus = AuthorizationStatuses.NO_AUTH;
     history.push(Url.SIGN_IN);
 
     render(
@@ -24,6 +25,7 @@ describe(`Test SignInScreen`, () => {
             <SignInScreen
               onSubmit={onSubmit}
               isAuthorisationFailed={isAuthorisationFailed}
+              authorizationStatus={authorizationStatus}
             />
           </Router>
         </Provider>
@@ -44,6 +46,7 @@ describe(`Test SignInScreen`, () => {
     const history = createMemoryHistory();
     history.push(Url.SIGN_IN);
     const isAuthorisationFailed = false;
+    const authorizationStatus = AuthorizationStatuses.NO_AUTH;
     const onSubmit = jest.fn();
     const userData = {
       login: ``,
@@ -68,6 +71,7 @@ describe(`Test SignInScreen`, () => {
             <SignInScreen
               onSubmit={onSubmit}
               isAuthorisationFailed={isAuthorisationFailed}
+              authorizationStatus={authorizationStatus}
             />
           </Router>
         </Provider>

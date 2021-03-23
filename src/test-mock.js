@@ -62,7 +62,7 @@ export const testStoreWithoutAuth = {
     loadedFilm: testFilm
   },
   [NameSpace.AUTH]: {
-    authorizationStatus: AuthorizationStatuses.AUTH,
+    authorizationStatus: AuthorizationStatuses.NO_AUTH,
     isAuthorisationFailed: false,
     userAvatar: `fakeAvatar`
   },
