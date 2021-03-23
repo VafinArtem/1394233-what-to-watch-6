@@ -16,6 +16,8 @@ describe(`Test AddReviewForm`, () => {
   it(`AddFavorite should render correctly`, () => {
     const submit = jest.fn();
     const activateForm = jest.fn();
+    const resetErrorCommentMessage = jest.fn();
+
     render(
         <Provider store={mockStore(testStoreWithAuth)}>
           <AddReviewForm
@@ -23,6 +25,7 @@ describe(`Test AddReviewForm`, () => {
             submit={submit}
             activateForm={activateForm}
             isActiveForm={true}
+            resetErrorCommentMessage={resetErrorCommentMessage}
           />
         </Provider>
     );
@@ -37,6 +40,7 @@ describe(`Test AddReviewForm`, () => {
   it(`When user click 'Post' should be change review object and active form status`, () => {
     const submitClikHandler = jest.fn();
     const activateForm = jest.fn();
+    const resetErrorCommentMessage = jest.fn();
     let isActiveForm = true;
 
     const review = {
@@ -63,6 +67,7 @@ describe(`Test AddReviewForm`, () => {
             submit={submitClikHandler}
             activateForm={activateForm}
             isActiveForm={isActiveForm}
+            resetErrorCommentMessage={resetErrorCommentMessage}
           />
         </Provider>
     );
@@ -71,5 +76,28 @@ describe(`Test AddReviewForm`, () => {
     expect(review.text).toBe(`test`);
     expect(review.rating).toBe(10);
     expect(isActiveForm).toBe(false);
+  });
+
+  it(`If errorMessage not null, then this message is displayed on the screen`, () => {
+    const submitClikHandler = jest.fn();
+    const activateForm = jest.fn();
+    const resetErrorCommentMessage = jest.fn();
+    const errorMessage = `error message`;
+    let isActiveForm = true;
+
+    render(
+        <Provider store={mockStore(testStoreWithAuth)}>
+          <AddReviewForm
+            filmID={1}
+            submit={submitClikHandler}
+            activateForm={activateForm}
+            isActiveForm={isActiveForm}
+            resetErrorCommentMessage={resetErrorCommentMessage}
+            errorMessage={errorMessage}
+          />
+        </Provider>
+    );
+
+    expect(screen.getByText(errorMessage)).toBeInTheDocument();
   });
 });
