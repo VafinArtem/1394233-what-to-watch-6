@@ -18,6 +18,8 @@ import {
   authorizationFailed,
   redirectToRoute,
   ActionType,
+  postCommentError,
+  resetErrorMessage,
 } from './action';
 
 describe(`Action creators work correctly`, () => {
@@ -399,6 +401,24 @@ describe(`Action creators work correctly`, () => {
     const id = 1;
 
     expect(loadComments(comments, id)).toEqual(expectedAction);
+  });
+
+  it(`Action creator for filed post comment returns correct action`, () => {
+    const expectedAction = {
+      type: ActionType.POST_COMMENT_FAILED,
+    };
+
+
+    expect(postCommentError()).toEqual(expectedAction);
+  });
+
+  it(`Action creator for reset error message returns correct action`, () => {
+    const expectedAction = {
+      type: ActionType.RESET_ERROR_MESSAGE,
+    };
+
+
+    expect(resetErrorMessage()).toEqual(expectedAction);
   });
 
   it(`Action creator for add film to favorite films list returns correct action`, () => {
