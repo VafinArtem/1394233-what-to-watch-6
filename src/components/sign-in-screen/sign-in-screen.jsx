@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {Link, Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {login} from '../../store/api-actions';
-import {AuthorizationStatuses, Url} from '../../consts';
+import {AuthorizationStatus, Url} from '../../consts';
 import ErrorMessage from '../error-message/error-message';
 import {getAuthorizationStatus, getFailedAuthorizationStatus} from '../../store/auth/selectors';
 
@@ -22,7 +22,7 @@ const SignInScreen = ({onSubmit, isAuthorisationFailed, authorizationStatus}) =>
 
   return (
     <React.Fragment>
-      {authorizationStatus === AuthorizationStatuses.AUTH ? <Redirect to={Url.MAIN} /> : <div className="user-page">
+      {authorizationStatus === AuthorizationStatus.AUTH ? <Redirect to={Url.MAIN} /> : <div className="user-page">
         <header className="page-header user-page__head">
           <div className="logo">
             <Link to={Url.MAIN} className="logo__link">

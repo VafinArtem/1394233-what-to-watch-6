@@ -9,7 +9,7 @@ export const Url = {
   NOT_FOUND: `/404`
 };
 
-export const Routes = {
+export const ApiRoute = {
   FILMS: `/films`,
   LOGIN: `/login`,
   LOGOUT: `/logout`,
@@ -22,7 +22,7 @@ export const ALL_GENRES_NAME_TAB = `All genres`;
 
 export const FILMS_AMOUNT_PER_STEP = 8;
 
-export const AuthorizationStatuses = {
+export const AuthorizationStatus = {
   AUTH: `Auth`,
   NO_AUTH: `NoAuth`
 };

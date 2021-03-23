@@ -1,9 +1,9 @@
 import {createReducer} from '@reduxjs/toolkit';
 import {ActionType} from '../action';
-import {AuthorizationErrorMessage, AuthorizationStatuses} from '../../consts';
+import {AuthorizationErrorMessage, AuthorizationStatus} from '../../consts';
 
 const initialState = {
-  authorizationStatus: AuthorizationStatuses.NO_AUTH,
+  authorizationStatus: AuthorizationStatus.NO_AUTH,
   isAuthorisationFailed: false,
   errorMessage: AuthorizationErrorMessage.DEFAULT,
   userAvatar: ``,

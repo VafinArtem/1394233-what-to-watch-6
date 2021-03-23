@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import NoLogin from '../no-login/no-login';
 import UserAvatar from '../user-avatar/user-avatar';
 import {connect} from 'react-redux';
-import {AuthorizationStatuses} from '../../consts';
+import {AuthorizationStatus} from '../../consts';
 import {getAuthorizationStatus} from '../../store/auth/selectors';
 
 const UserBlock = ({authorizationStatus}) => {
   return (
     <div className="user-block">
-      {authorizationStatus === AuthorizationStatuses.AUTH ? <UserAvatar /> : <NoLogin />}
+      {authorizationStatus === AuthorizationStatus.AUTH ? <UserAvatar /> : <NoLogin />}
     </div>
   );
 };

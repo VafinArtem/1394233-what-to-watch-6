@@ -1,4 +1,4 @@
-import {AuthorizationStatuses} from "./consts";
+import {AuthorizationStatus} from "./consts";
 import {NameSpace} from "./store/main-reducer";
 
 export const testFilm = {
@@ -40,7 +40,7 @@ export const testStoreWithAuth = {
     loadedFilm: testFilm
   },
   [NameSpace.AUTH]: {
-    authorizationStatus: AuthorizationStatuses.AUTH,
+    authorizationStatus: AuthorizationStatus.AUTH,
     isAuthorisationFailed: false,
     userAvatar: `fakeAvatar`
   },
@@ -62,7 +62,7 @@ export const testStoreWithoutAuth = {
     loadedFilm: testFilm
   },
   [NameSpace.AUTH]: {
-    authorizationStatus: AuthorizationStatuses.NO_AUTH,
+    authorizationStatus: AuthorizationStatus.NO_AUTH,
     isAuthorisationFailed: false,
     userAvatar: `fakeAvatar`
   },

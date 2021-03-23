@@ -5,7 +5,7 @@ import {render, screen} from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 import {Provider} from 'react-redux';
 import PrivateRoute from './private-route';
-import {AuthorizationStatuses} from '../../consts';
+import {AuthorizationStatus} from '../../consts';
 import {NameSpace} from '../../store/main-reducer';
 
 const mockStore = configureStore({});
@@ -18,7 +18,7 @@ describe(`Test PrivateRouter`, () => {
 
   it(`Should be render component for public route, when user not authorized`, () => {
     const store = mockStore({
-      [NameSpace.AUTH]: {authorizationStatus: AuthorizationStatuses.NO_AUTH}
+      [NameSpace.AUTH]: {authorizationStatus: AuthorizationStatus.NO_AUTH}
     });
 
     render(
@@ -40,7 +40,7 @@ describe(`Test PrivateRouter`, () => {
 
   it(`Should be render component for private route, when user authorized`, () => {
     const store = mockStore({
-      [NameSpace.AUTH]: {authorizationStatus: AuthorizationStatuses.AUTH}
+      [NameSpace.AUTH]: {authorizationStatus: AuthorizationStatus.AUTH}
     });
 
     render(

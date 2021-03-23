@@ -6,7 +6,7 @@ import UserBlock from '../user-block/user-block';
 import MoviesList from '../movies-list/movies-list';
 import MovieTabs from '../movie-tabs/movie-tabs';
 import AddFavorite from '../add-favorite/add-favorite';
-import {AuthorizationStatuses, Url} from '../../consts';
+import {AuthorizationStatus, Url} from '../../consts';
 import {MOVIES_PROP} from '../../utils/validate';
 import {getSimmilarMoviesWithGenre} from '../../store/films/selectors';
 import {getAuthorizationStatus} from '../../store/auth/selectors';
@@ -59,7 +59,7 @@ const Movie = ({film, films, onPlayMovie, authorizationStatus}) => {
                   id={id}
                   isFavorite={isFavorite}
                 />
-                {authorizationStatus === AuthorizationStatuses.AUTH
+                {authorizationStatus === AuthorizationStatus.AUTH
                   ? <Link to={`/films/${id}/review`} className="btn movie-card__button movie-card__add-review">Add review</Link>
                   : ``
                 }

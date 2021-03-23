@@ -5,7 +5,7 @@ import configureStore from 'redux-mock-store';
 import userEvent from '@testing-library/user-event';
 import {createMemoryHistory} from 'history';
 import {Provider} from 'react-redux';
-import {Routes, Url} from '../../consts';
+import {ApiRoute, Url} from '../../consts';
 import {testFilm, testStoreWithAuth} from '../../test-mock';
 import {Movie} from './movie';
 import {NameSpace} from '../../store/main-reducer';
@@ -18,7 +18,7 @@ const {[NameSpace.FILMS]: {films}, [NameSpace.AUTH]: {authorizationStatus}} = te
 describe(`Test Movie`, () => {
   it(`Movie should render correctly`, () => {
     const history = createMemoryHistory();
-    history.push(`${Routes.FILMS}/${id}`);
+    history.push(`${Route.FILMS}/${id}`);
 
     render(
         <Provider store={mockStore(testStoreWithAuth)}>
@@ -45,13 +45,13 @@ describe(`Test Movie`, () => {
 
   it(`When a user clicks on logo should be redirect`, () => {
     const history = createMemoryHistory();
-    history.push(`${Routes.FILMS}/${id}`);
+    history.push(`${ApiRoute.FILMS}/${id}`);
 
     const {container} = render(
         <Provider store={mockStore(testStoreWithAuth)}>
           <Router history={history}>
             <Switch>
-              <Route exact path={`${Routes.FILMS}/${id}`}>
+              <Route exact path={`${ApiRoute.FILMS}/${id}`}>
                 <Movie
                   film={testFilm}
                   onPlayMovie={onPlayMovie}
@@ -75,13 +75,13 @@ describe(`Test Movie`, () => {
 
   it(`When a user clicks on 'Add review' should be redirect`, () => {
     const history = createMemoryHistory();
-    history.push(`${Routes.FILMS}/${id}`);
+    history.push(`${ApiRoute.FILMS}/${id}`);
 
     const {container} = render(
         <Provider store={mockStore(testStoreWithAuth)}>
           <Router history={history}>
             <Switch>
-              <Route exact path={`${Routes.FILMS}/${id}`}>
+              <Route exact path={`${ApiRoute.FILMS}/${id}`}>
                 <Movie
                   film={testFilm}
                   onPlayMovie={onPlayMovie}
