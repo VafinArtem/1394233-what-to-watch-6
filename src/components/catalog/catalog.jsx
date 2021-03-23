@@ -38,16 +38,16 @@ Catalog.propTypes = {
   renderButton: PropTypes.bool.isRequired,
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  loadFilms() {
-    dispatch(fetchFilmsList());
-  },
-});
-
 const mapStateToProps = (state) => ({
   genre: getActiveGenre(state),
   films: getMinimalShowFilms(state),
   renderButton: renderShowMoreButton(state)
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  loadFilms() {
+    dispatch(fetchFilmsList());
+  },
 });
 
 export {Catalog};

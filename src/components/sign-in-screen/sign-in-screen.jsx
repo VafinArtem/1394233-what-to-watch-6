@@ -91,15 +91,14 @@ SignInScreen.propTypes = {
   authorizationStatus: PropTypes.string.isRequired
 };
 
+const mapStateToProps = (state) => ({
+  isAuthorisationFailed: getFailedAuthorizationStatus(state),
+  authorizationStatus: getAuthorizationStatus(state)
+});
 const mapDispatchToProps = (dispatch) => ({
   onSubmit(authData) {
     dispatch(login(authData));
   }
-});
-
-const mapStateToProps = (state) => ({
-  isAuthorisationFailed: getFailedAuthorizationStatus(state),
-  authorizationStatus: getAuthorizationStatus(state)
 });
 
 export {SignInScreen};

@@ -73,6 +73,11 @@ AddReviewForm.propTypes = {
   resetErrorCommentMessage: PropTypes.func.isRequired,
 };
 
+const mapStateToProps = (state) => ({
+  isActiveForm: getActiveCommentFormStatus(state),
+  errorMessage: getErrorMessage(state)
+});
+
 const mapDispatchToProps = (dispatch) => ({
   submit(filmID, comment) {
     dispatch(addComment(filmID, comment));
@@ -83,11 +88,6 @@ const mapDispatchToProps = (dispatch) => ({
   resetErrorCommentMessage() {
     dispatch(resetErrorMessage());
   }
-});
-
-const mapStateToProps = (state) => ({
-  isActiveForm: getActiveCommentFormStatus(state),
-  errorMessage: getErrorMessage(state)
 });
 
 export {AddReviewForm};
