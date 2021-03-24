@@ -26,14 +26,14 @@ GenresList.propTypes = {
   genres: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired
 };
 
+const mapStateToProps = (state) => ({
+  genres: getGenres(state),
+});
+
 const mapDispatchToProps = (dispatch) => ({
   onChangeGenres(type) {
     dispatch(changeGenres(type));
   },
-});
-
-const mapStateToProps = (state) => ({
-  genres: getGenres(state),
 });
 
 export {GenresList};

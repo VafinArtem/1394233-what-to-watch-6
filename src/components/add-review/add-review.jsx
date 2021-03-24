@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import AddReviewForm from '../add-revierw-form/add-review-form';
 import UserBlock from '../user-block/user-block';
-import {Routes, Url} from '../../consts';
+import {ApiRoute, Url} from '../../consts';
 
 const AddReview = ({title, poster, backgroundImage, filmID}) => {
   return (
@@ -24,7 +24,7 @@ const AddReview = ({title, poster, backgroundImage, filmID}) => {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <Link to={`${Routes.FILMS}/${filmID}`} className="breadcrumbs__link">{title}</Link>
+                <Link to={`${ApiRoute.FILMS}/${filmID}`} className="breadcrumbs__link">{title}</Link>
               </li>
               <li className="breadcrumbs__item">
                 <a className="breadcrumbs__link">Add review</a>

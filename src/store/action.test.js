@@ -18,6 +18,8 @@ import {
   authorizationFailed,
   redirectToRoute,
   ActionType,
+  postCommentError,
+  resetErrorMessage,
 } from './action';
 
 describe(`Action creators work correctly`, () => {
@@ -401,6 +403,24 @@ describe(`Action creators work correctly`, () => {
     expect(loadComments(comments, id)).toEqual(expectedAction);
   });
 
+  it(`Action creator for filed post comment returns correct action`, () => {
+    const expectedAction = {
+      type: ActionType.POST_COMMENT_FAILED,
+    };
+
+
+    expect(postCommentError()).toEqual(expectedAction);
+  });
+
+  it(`Action creator for reset error message returns correct action`, () => {
+    const expectedAction = {
+      type: ActionType.RESET_ERROR_MESSAGE,
+    };
+
+
+    expect(resetErrorMessage()).toEqual(expectedAction);
+  });
+
   it(`Action creator for add film to favorite films list returns correct action`, () => {
     const expectedAction = {
       type: ActionType.ADD_FAVORITE_FILM,
@@ -487,23 +507,28 @@ describe(`Action creators work correctly`, () => {
   });
 
   it(`Action creator for site authorization returns correct action`, () => {
+    const AUTHORIZATION_STATUS = `Auth`;
+    const AVATAR = `fakeAvatar`;
+
     const expectedAction = {
       type: ActionType.AUTHORIZATION,
-      payload: `Auth`
+      payload: {
+        action: AUTHORIZATION_STATUS,
+        avatar: AVATAR
+      }
     };
 
-    const AUTHORIZATION_STATUS = `Auth`;
-
-    expect(authorization(AUTHORIZATION_STATUS)).toEqual(expectedAction);
+    expect(authorization(AUTHORIZATION_STATUS, AVATAR)).toEqual(expectedAction);
   });
 
-  it(`Action creator for site authorization returns correct action`, () => {
+  it(`Action creator for site authorization filed returns correct action`, () => {
+    const AUTHORIZATION_ERROR_MESSAGE = `Please enter a valid email address or password`;
+
     const expectedAction = {
       type: ActionType.AUTHORIZATION_FAILED,
-      payload: `Please enter a valid email address or password`
+      payload: AUTHORIZATION_ERROR_MESSAGE
     };
 
-    const AUTHORIZATION_ERROR_MESSAGE = `Please enter a valid email address or password`;
 
     expect(authorizationFailed(AUTHORIZATION_ERROR_MESSAGE)).toEqual(expectedAction);
   });

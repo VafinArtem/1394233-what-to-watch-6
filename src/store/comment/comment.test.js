@@ -1,6 +1,6 @@
 import MockAdapter from 'axios-mock-adapter';
 import {createAPI} from '../../services/api';
-import {activeForm, loadComments, postComment, redirectToRoute} from '../action';
+import {activeForm, loadComments, postComment, redirectToRoute, resetErrorMessage, postCommentError} from '../action';
 import {addComment, fetchComments} from '../api-actions';
 import {comment} from './comment';
 
@@ -11,6 +11,7 @@ describe(`Reducers work correctly`, () => {
     const initialState = {
       reviews: {},
       isActiveAddCommentForm: false,
+      error: null
     };
 
     expect(comment(undefined, {})).toEqual(initialState);
@@ -190,6 +191,26 @@ describe(`Reducers work correctly`, () => {
     expect(comment(state, postComment(postedComments, id))).toEqual(validState);
   });
 
+  it(`Reducer changes the error message after receiving the error`, () => {
+    const ErrorMessage = {
+      NOT_ERROR: null,
+      ERROR: `При отправке комментария произошла ошибка, попробуйте позже`
+    };
+
+    const state = {
+      error: ErrorMessage.NOT_ERROR,
+      reviews: {},
+      isActiveAddCommentForm: false,
+    };
+    const validState = {
+      error: ErrorMessage.ERROR,
+      reviews: {},
+      isActiveAddCommentForm: true,
+    };
+
+    expect(comment(state, postCommentError())).toEqual(validState);
+  });
+
   it(`Reducer changes form activation states to payload value`, () => {
     const state = {
       reviews: {},
@@ -208,6 +229,21 @@ describe(`Reducers work correctly`, () => {
     };
 
     expect(comment(state, activeForm(false))).toEqual(notActiveFormState);
+  });
+
+  it(`Reducer changes errorMessage after reset error message`, () => {
+    const state = {
+      error: `fake error`,
+      reviews: {},
+      isActiveAddCommentForm: false,
+    };
+    const activeFormState = {
+      error: null,
+      reviews: {},
+      isActiveAddCommentForm: false,
+    };
+
+    expect(comment(state, resetErrorMessage())).toEqual(activeFormState);
   });
 });
 

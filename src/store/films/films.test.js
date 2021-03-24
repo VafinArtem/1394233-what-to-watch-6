@@ -1,6 +1,6 @@
 import MockAdapter from 'axios-mock-adapter';
 import {createAPI} from '../../services/api';
-import {FILMS_AMOUNT_PER_STEP, Routes} from '../../consts';
+import {FILMS_AMOUNT_PER_STEP, ApiRoute} from '../../consts';
 import {addFavoriteFilmsList, getFilmGenre, getFilmName, loadFavoriteFilms, loadFilm, loadFilms, loadPromoFilm, removeFavoriteFilmsList, resetAmountShowFilms, showMoreFilms} from '../action';
 import {films} from './films';
 import {addFavorite, fetchFavoriteFilmsList, fetchFilm, fetchFilmsList, fetchPromoFilm} from '../api-actions';
@@ -645,7 +645,7 @@ describe(`Async operation work correctly`, () => {
     const loadFilmsFromServer = fetchFilmsList();
 
     apiMock
-      .onGet(Routes.FILMS)
+      .onGet(ApiRoute.FILMS)
       .reply(200, fakeFilms);
 
     return loadFilmsFromServer(dispatch, () => {}, api)
@@ -663,7 +663,7 @@ describe(`Async operation work correctly`, () => {
     const loadFavoriteFilmsFromServer = fetchFavoriteFilmsList();
 
     apiMock
-      .onGet(Routes.FAVORITE)
+      .onGet(ApiRoute.FAVORITE)
       .reply(200, fakeFilms);
 
     return loadFavoriteFilmsFromServer(dispatch, () => {}, api)
@@ -680,7 +680,7 @@ describe(`Async operation work correctly`, () => {
     const loadFilmFromServer = fetchFilm(filmID);
 
     apiMock
-      .onGet(`${Routes.FILMS}/${filmID}`)
+      .onGet(`${ApiRoute.FILMS}/${filmID}`)
       .reply(200, fakeFilm);
 
     return loadFilmFromServer(dispatch, () => {}, api)
@@ -696,7 +696,7 @@ describe(`Async operation work correctly`, () => {
     const loadPromoFilmFromServer = fetchPromoFilm();
 
     apiMock
-      .onGet(Routes.PROMO)
+      .onGet(ApiRoute.PROMO)
       .reply(200, fakeFilm);
 
     return loadPromoFilmFromServer(dispatch, () => {}, api)
@@ -756,7 +756,7 @@ describe(`Async operation work correctly`, () => {
     };
 
     apiMock
-      .onPost(`${Routes.FAVORITE}/${filmID}/${status}`)
+      .onPost(`${ApiRoute.FAVORITE}/${filmID}/${status}`)
       .reply(200, fakeFavoriteFilm);
 
     return addFavoriteFilm(dispatch, () => {}, api)
@@ -796,7 +796,7 @@ describe(`Async operation work correctly`, () => {
     };
 
     apiMock
-      .onPost(`${Routes.FAVORITE}/${filmID}/${status}`)
+      .onPost(`${ApiRoute.FAVORITE}/${filmID}/${status}`)
       .reply(200, fakeFavoriteFilm);
 
     return addFavoriteFilm(dispatch, () => {}, api)

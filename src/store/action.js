@@ -16,6 +16,8 @@ export const ActionType = {
   FILM_NAME: `film/name`,
   LOAD_COMMENTS: `comments/load`,
   POST_COMMENT: `comment/post`,
+  POST_COMMENT_FAILED: `comment/postFailed`,
+  RESET_ERROR_MESSAGE: `comment/resetErrorMessage`,
   ACTIVE_FORM: `comment/activeForm`,
   AUTHORIZATION: `site/authorization`,
   AUTHORIZATION_FAILED: `site/authorizationFailed`,
@@ -50,6 +52,10 @@ export const postComment = createAction(ActionType.POST_COMMENT, (comments, id) 
   };
 });
 
+export const postCommentError = createAction(ActionType.POST_COMMENT_FAILED);
+
+export const resetErrorMessage = createAction(ActionType.RESET_ERROR_MESSAGE);
+
 export const loadComments = createAction(ActionType.LOAD_COMMENTS, (comments, id) => {
   return {
     payload: {
@@ -64,7 +70,7 @@ export const removeFavoriteFilmsList = createAction(ActionType.REMOVE_FAVORITE_F
 
 export const activeForm = createAction(ActionType.ACTIVE_FORM, (boolean) => ({payload: boolean}));
 
-export const authorization = createAction(ActionType.AUTHORIZATION, (action) => ({payload: action}));
+export const authorization = createAction(ActionType.AUTHORIZATION, (action, avatar) => ({payload: {action, avatar}}));
 
 export const authorizationFailed = createAction(ActionType.AUTHORIZATION_FAILED, () => ({payload: AuthorizationErrorMessage.EMAIL}));
 

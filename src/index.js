@@ -6,15 +6,16 @@ import {Router as BrowserRouter} from 'react-router-dom';
 import {createAPI} from "./services/api";
 import App from './components/app/app';
 import mainReducer from './store/main-reducer';
-import {authorization, authorizationFailed} from './store/action';
-import {AuthorizationStatuses} from './consts';
+import {authorization, authorizationFailed, postCommentError} from './store/action';
+import {AuthorizationStatus} from './consts';
 import {checkLogin} from './store/api-actions';
 import {redirect} from "./store/middlewares/redirect";
 import browserHistory from "./browser-history";
 
 const api = createAPI(
-    () => store.dispatch(authorization(AuthorizationStatuses.NO_AUTH)),
-    () => store.dispatch(authorizationFailed())
+    () => store.dispatch(authorization(AuthorizationStatus.NO_AUTH)),
+    () => store.dispatch(authorizationFailed()),
+    () => store.dispatch(postCommentError())
 );
 
 const store = configureStore({

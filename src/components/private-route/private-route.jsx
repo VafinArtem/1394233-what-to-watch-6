@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Route, Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {AuthorizationStatuses, Url} from '../../consts';
+import {AuthorizationStatus, Url} from '../../consts';
 import {getAuthorizationStatus} from '../../store/auth/selectors';
 
 
@@ -13,7 +13,7 @@ const PrivateRoute = ({render, path, exact, authorizationStatus}) => {
       exact={exact}
       render={(routeProps) => {
         return (
-          authorizationStatus === AuthorizationStatuses.AUTH
+          authorizationStatus === AuthorizationStatus.AUTH
             ? render(routeProps)
             : <Redirect to={Url.SIGN_IN} />
         );
